@@ -5,3 +5,5 @@ azure-functions/proxies.json
 azure-functions/.vscode/extensions.json
 azure-functions/start-video-indexing/sample.dat
 azure-functions/video-indexer-callback/sample.dat
+.gitignore
+infrastructure/.env
