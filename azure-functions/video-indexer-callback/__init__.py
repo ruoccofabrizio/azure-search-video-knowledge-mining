@@ -77,7 +77,10 @@ def process_video_data(video_data: dict):
     # Create link to watch the video
     account_id = video_data['accountId']
     video_id = video_data['id']
-    video_index['video_indexer_url'] = f"https://weu.videoindexer.ai/embed/player/{account_id}/{video_id}"
+
+    location = os.environ["video_indexer_location"]
+    url_prefix = 'weu' if location == 'westeurope' else 'www'
+    video_index['video_indexer_url'] = f"https://{url_prefix}.videoindexer.ai/embed/player/{account_id}/{video_id}"
 
     # Create path on Azure Blob Storage for video insights file
     keys            = get_storage_details(os.environ['videoknowledgemining_STORAGE'])
