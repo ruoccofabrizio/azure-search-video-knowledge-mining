@@ -12,6 +12,9 @@ urlFragment: azure-search-video-knowledge-mining
 
 ![architecture](./architecture.JPG "Archicture diagram")
 
+# Demo site
+[Video Knowledge Mining Demo](https://video-knowledge-mining.azurewebsites.net/)
+
 ## Extend Azure Cognitive Search
 Extend [Azure Cognitive Search](https://docs.microsoft.com/azure/search/cognitive-search-concept-intro) capabilities enabling video transcripts and insights search, through an integration with [Azure Video Indexer](https://docs.microsoft.com/en-us/azure/media-services/video-indexer/video-indexer-get-started).
 
