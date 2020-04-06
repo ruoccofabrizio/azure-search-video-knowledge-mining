@@ -13,5 +13,8 @@ urlFragment: azure-search-video-knowledge-mining
 ![architecture](./architecture.JPG "Archicture diagram")
 
 ## Extend Azure Cognitive Search
-Extend Azure Cognitive Search capabilities enabling video transcripts and insights search, through an integration with Azure Video Indexer.
+Extend [Azure Cognitive Search](https://docs.microsoft.com/azure/search/cognitive-search-concept-intro) capabilities enabling video transcripts and insights search, through an integration with [Azure Video Indexer](https://docs.microsoft.com/en-us/azure/media-services/video-indexer/video-indexer-get-started).
 
+This repo is a collection of two skills:  
+* start-video-indexing (trigger a video indexing starting from a video upload in Azure Blob Storage)
+* video-indexer-callback (callback from Azure Blob Storage and push data to Azure Cognitive Search and Azure Blob Storage)
