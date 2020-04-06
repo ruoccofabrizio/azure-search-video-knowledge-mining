@@ -18,7 +18,7 @@ Output: Azure Cognitive Search index populated with video insights extracted fro
 | blob_account | BLOB_ACCOUNT | Azure Blob Storage Account    |  
 | blob_key | BLOB_KEY | Azure Blob Storage Key  |  
 | blob_container_source | BLOB_CONTAINER_VIDEO_DROP | Azure Blob Storage Container for Videos to be indexed  |  
-| DEBUG | false,  // Enable to log information true / false  |  
+| DEBUG | false | Enable to log information true / false  |  
 | entities | transcript,ocr,keywords,topics,faces, labels,brands,namedLocations,namedPeople | Entities you want to extract from videos as insights and push to Azure Cognitive Search  |  
 | function_url | CALLBACK_URL_VIDEO_INDEXER_PROCESSING | Azure Function to be called when the Azure Video Indexer complete processing a video  |  
 | search_account | SEARCH_ACCOUNT | Azure Cognitive Search Account|  
