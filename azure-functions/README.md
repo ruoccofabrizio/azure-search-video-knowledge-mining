@@ -10,10 +10,10 @@ Output: Azure Cognitive Search index populated with video insights extracted fro
 
 
 ## Function App Settings
-| App Setting         | Value                                   | Note                                                             |
-|---------------------|-----------------------------------------|------------------------------------------------------------------|
+| App Setting         | Value                           | Note                                                             |
+|---------------------|---------------------------------|------------------------------------------------------------------|
 | AzureWebJobsStorage | FUNCTION_BLOB_STORAGE_CONNECTION_STRING | Azure Blob Storage connection string to store Function artifacts |  
-| FUNCTIONS_WORKER_RUNTIME | python,  |  
+| FUNCTIONS_WORKER_RUNTIME | python  |  
 | blob_container | BLOB_CONTAINER | Azure Blob Storage Container  |  
 | blob_account | BLOB_ACCOUNT | Azure Blob Storage Account    |  
 | blob_key | BLOB_KEY | Azure Blob Storage Key  |  
