@@ -1,0 +1,24 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "",
+    "blob_container" : "",
+    "blob_account" : "",
+    "blob_key" : "",
+    "blob_container_source" : "",
+    "DEBUG" : ,
+    "entities" : "",
+    "function_url" : "",
+    "search_account" : "",
+    "search_index" : "",
+    "search_api_key" : "",
+    "search_api_version" : "",
+    "video_indexer_account_id" : "",
+    "video_indexer_api_key" : "",
+    "video_indexer_endpoint" : "",
+    "video_indexer_location" : "",
+    "video_indexer_location_url_prefix": "",
+    "videoknowledgemining_STORAGE": ""
+  }
+}
