@@ -18,7 +18,7 @@
     "video_indexer_api_key" : "VIDEO_INDEXER_API_KEY",
     "video_indexer_endpoint" : "VIDEO_INDEXER_ENDPOINT",
     "video_indexer_location" : "VIDEO_INDEXER_LOCATION",
-	  "video_indexer_location_url_prefix": "VIDEO_INDEXER_LOCATION_URL_PREFIX",
+    "video_indexer_location_url_prefix": "VIDEO_INDEXER_LOCATION_URL_PREFIX",
     "videoknowledgemining_STORAGE": "BLOB_STORAGE_CONNECTION_STRING_VIDEO_DROP"
   }
 }
