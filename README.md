@@ -51,9 +51,15 @@ When indexing by one channel, partial result for those models will be available.
 * __Topic inference__: Makes inference of main topics from transcripts. The 2nd-level IPTC taxonomy is included.
 * __Sentiment analysis__: Identifies positive, negative, and neutral sentiments from speech and visual text.
 
+# Repo Architecture
 This repo is a collection of two skills:  
 * [start-video-indexing](azure-functions/start-video-indexing) (trigger a video indexing starting from a video upload in Azure Blob Storage)  
 ![architecture-start-video-indexing](azure-functions/start-video-indexing/start-video-indexer.png "Archicture diagram")
 
 * [video-indexer-callback](azure-functions/video-indexer-callback) (callback from Azure Blob Storage and push data to Azure Cognitive Search and Azure Blob Storage)
 ![architecture-video-indexer-callback](azure-functions/video-indexer-callback/video-indexer-callback.png "Archicture diagram")
+
+and required infrastructurem to set up the solution:
+* [Powershell script](infrastructure/powershell)
+* [Python script](infrastructure/python)
+__NOTE :__ Both Powershell and Python setup will provide same results. With Python solution you have to create a [Service Principal](https://docs.microsoft.com/en-us/azure-stack/operator/azure-stack-create-service-principals?view=azs-2002) and enable it to access your Subscription or Resource Group.
