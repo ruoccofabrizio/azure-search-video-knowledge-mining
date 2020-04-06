@@ -59,7 +59,7 @@ This repo is a collection of two skills:
 * [video-indexer-callback](azure-functions/video-indexer-callback) (callback from Azure Blob Storage and push data to Azure Cognitive Search and Azure Blob Storage)
 ![architecture-video-indexer-callback](azure-functions/video-indexer-callback/video-indexer-callback.png "Archicture diagram")
 
-and required infrastructurem to set up the solution:
+and required infrastructure to set up the solution:
 * [Powershell script](infrastructure/powershell)
-* [Python script](infrastructure/python)
+* [Python script](infrastructure/python)  
 __NOTE :__ Both Powershell and Python setup will provide same results. With Python solution you have to create a [Service Principal](https://docs.microsoft.com/en-us/azure-stack/operator/azure-stack-create-service-principals?view=azs-2002) and enable it to access your Subscription or Resource Group.
