@@ -63,3 +63,6 @@ and required infrastructure to set up the solution:
 * [Powershell script](infrastructure/powershell)
 * [Python script](infrastructure/python)  
 __NOTE :__ Both Powershell and Python setup will provide same results. With Python solution you have to create a [Service Principal](https://docs.microsoft.com/en-us/azure-stack/operator/azure-stack-create-service-principals?view=azs-2002) and enable it to access your Subscription or Resource Group.
+
+# Web App
+To deploy a video indexer enabled Knowledge Mining Solution Accelerator Web App, refer to this [Knowledge Mining Solution Accelerator with Video Indexer](https://github.com/ruoccofabrizio/azure-search-knowledge-mining)
