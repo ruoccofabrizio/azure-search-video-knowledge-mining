@@ -79,8 +79,8 @@ def process_video_data(video_data: dict):
     video_id = video_data['id']
 
     location_url_prefix = os.environ["video_indexer_location_url_prefix"]
-    video_index['video_indexer_url'] = f"https://{location_url_prefix}.videoindexer.ai/embed/player/{account_id}/{video_id}"
-
+    video_index['video_indexer_url'] = f"https://api.videoindexer.ai/{location_url_prefix}/Accounts/{account_id}/Videos/{video_id}/PlayerWidget?accessToken={token}"
+    
     # Create path on Azure Blob Storage for video insights file
     keys            = get_storage_details(os.environ['videoknowledgemining_STORAGE'])
     protocol        = keys['DefaultEndpointsProtocol']
@@ -105,8 +105,11 @@ def process_video_data(video_data: dict):
     video_index['brands'] = list(map(lambda x: x['name'], video_data['insights'].get('brands',[])))
     video_index['namedLocations'] = list(map(lambda x: x['name'], video_data['insights'].get('namedLocations',[])))
     video_index['namedPeople'] = list(map(lambda x: x['name'],video_data['insights'].get('namedPeople',[])))
-    video_index['sentiments'] = sum(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[])))) / len(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[]))))
-
+    try:
+        video_index['sentiments'] = sum(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[])))) / len(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[]))))
+    except ZeroDivisionError:
+        video_index['sentiments'] = 0
+    
     time_entities = map_time_entites(video_data)
 
     return video_index, time_entities
