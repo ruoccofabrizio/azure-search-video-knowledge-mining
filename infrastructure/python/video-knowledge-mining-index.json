@@ -63,7 +63,7 @@
     {
       "name": "language",
       "type": "Edm.String",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "key": false,
       "retrievable": true,
@@ -147,7 +147,7 @@
     {
       "name": "topics",
       "type": "Collection(Edm.String)",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "retrievable": true,
       "searchable": true,
@@ -186,7 +186,7 @@
     {
       "name": "brands",
       "type": "Collection(Edm.String)",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "retrievable": true,
       "searchable": true,
