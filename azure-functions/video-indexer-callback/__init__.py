@@ -16,12 +16,12 @@ def main(req: func.HttpRequest) -> str: #func.HttpResponse:
 
     if id and state:
         # Get video insights from Video Indexer
-        data, token = get_video_insights(id)
+        data = get_video_insights(id)
         if os.environ["DEBUG"] =='true':
             logging.info(data)
 
         # Perfom data processing
-        processed_data, time_entities = process_video_data(data, token)
+        processed_data, time_entities = process_video_data(data)
 
         #Push data to Search index
         push_video_data(processed_data, time_entities)
@@ -62,11 +62,11 @@ def get_video_insights(video_id: str):
     search_video = requests.get(video_url, headers=headers)
     video_data = search_video.json()
 
-    return video_data, video_access_token
+    return video_data
 
 
 # Custom processing to extract few insights
-def process_video_data(video_data: dict, token: str):
+def process_video_data(video_data: dict):
 
     # Extract some fields to be indexed. Any other custom logic can be applied instead
     video_index = {}
@@ -79,7 +79,7 @@ def process_video_data(video_data: dict, token: str):
     video_id = video_data['id']
 
     location_url_prefix = os.environ["video_indexer_location_url_prefix"]
-    video_index['video_indexer_url'] = f"https://api.videoindexer.ai/{location_url_prefix}/Accounts/{account_id}/Videos/{video_id}/PlayerWidget?accessToken={token}"
+    video_index['video_indexer_url'] = f"https://{location_url_prefix}.videoindexer.ai/embed/player/{account_id}/{video_id}"
 
     # Create path on Azure Blob Storage for video insights file
     keys            = get_storage_details(os.environ['videoknowledgemining_STORAGE'])
@@ -105,10 +105,8 @@ def process_video_data(video_data: dict, token: str):
     video_index['brands'] = list(map(lambda x: x['name'], video_data['insights'].get('brands',[])))
     video_index['namedLocations'] = list(map(lambda x: x['name'], video_data['insights'].get('namedLocations',[])))
     video_index['namedPeople'] = list(map(lambda x: x['name'],video_data['insights'].get('namedPeople',[])))
-    try:
-        video_index['sentiments'] = sum(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[])))) / len(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[]))))
-    except ZeroDivisionError:
-        video_index['sentiments'] = 0
+    video_index['sentiments'] = sum(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[])))) / len(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[]))))
+
     time_entities = map_time_entites(video_data)
 
     return video_index, time_entities
