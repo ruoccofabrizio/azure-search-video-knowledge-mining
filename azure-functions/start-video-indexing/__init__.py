@@ -7,16 +7,17 @@ from datetime import datetime, timedelta
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, generate_container_sas
 
 # Function triggered by Blob Storage Input
-def main(myblob: func.InputStream):
-    logging.info(f"Python blob trigger function processed blob {myblob.name}")
-    if ".mp4" in myblob.name:
-        logging.info(f"Start processing {myblob.name}")
-        # Generate Shared Access Signature to access the video on Azure Blob Storage
-        sas_url = get_sas_url(myblob.uri)
-        logging.info(sas_url)
-        # Call Video Indexer service with Shared Access Signature to index the video
-        video_result = start_video_indexing(myblob.name ,sas_url)
-        logging.info(video_result)
+def main(event: func.EventGridEvent):
+    logging.info(f"Python blob trigger function processed blob: {url}")
+    # Generate Shared Access Signature to access the video on Azure Blob Storage
+    event_data = event.get_json()
+    url = event_data['url']
+    name = url.split('/')[-1]
+    sas_url = get_sas_url(url)
+    logging.info(sas_url)
+    # Call Video Indexer service with Shared Access Signature to index the video
+    video_result = start_video_indexing(name ,sas_url)
+    logging.info(video_result)
 
 # Define function to create Shared Access Signature
 def get_sas_url(uri: str):
