@@ -8,10 +8,10 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, g
 
 # Function triggered by Blob Storage Input
 def main(event: func.EventGridEvent):
-    logging.info(f"Python blob trigger function processed blob: {url}")
     # Generate Shared Access Signature to access the video on Azure Blob Storage
     event_data = event.get_json()
     url = event_data['url']
+    logging.info(f"Python blob trigger function processed blob: {url}")
     name = url.split('/')[-1]
     sas_url = get_sas_url(url)
     logging.info(sas_url)
