@@ -103,8 +103,7 @@ def process_video_data(video_data: dict):
     video_index['faces'] = list(map(lambda x: x['name'], video_data['insights'].get('faces',[])))
     video_index['labels'] = list(map(lambda x: x['name'], video_data['insights'].get('labels',[])))
     video_index['brands'] = list(map(lambda x: x['name'], video_data['insights'].get('brands',[])))
-    video_index['namedLocations'] = list(map(lambda x: x['name'], video_data['insights'].get('namedLocations',[])))
-    video_index['namedPeople'] = list(map(lambda x: x['name'],video_data['insights'].get('namedPeople',[])))
+
     try:
         video_index['sentiments'] = sum(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[])))) / len(list(map(lambda x: x['averageScore'],video_data['insights'].get('sentiments',[]))))
     except ZeroDivisionError:
