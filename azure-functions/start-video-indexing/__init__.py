@@ -59,7 +59,7 @@ def start_video_indexing(video_name: str, video_url: str):
     function_url = urllib.parse.quote(function_url)
     privacy = "Private" # Set visibility for the video [Private, Public]
 
-    upload_video_url = f"{endpoint}/{location}/Accounts/{account_id}/Videos?accessToken={access_token}&name={video_name}&videoUrl={video_url}&privacy={privacy}&callbackUrl={function_url}"
+    upload_video_url = f"{endpoint}/{location}/Accounts/{account_id}/Videos?accessToken={access_token}&name={video_name}&videoUrl={video_url}&privacy={privacy}&callbackUrl={function_url}&language=auto"
     logging.info(upload_video_url)
     upload_result = requests.post(upload_video_url, headers=headers)
 
