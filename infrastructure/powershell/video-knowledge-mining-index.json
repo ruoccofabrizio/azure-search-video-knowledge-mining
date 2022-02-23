@@ -1,9 +1,10 @@
 {
+  "name": "video-knowledge-mining-index",
   "fields": [
     {
       "name": "id",
       "type": "Edm.String",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "key": false,
       "retrievable": true,
@@ -15,7 +16,7 @@
       "synonymMaps": [],
       "fields": []
     },
-	{
+    {
       "name": "metadata_storage_name",
       "type": "Edm.String",
       "facetable": false,
@@ -30,30 +31,13 @@
       "synonymMaps": [],
       "fields": []
     },
-	{
+    {
       "name": "durationInSeconds",
       "type": "Edm.Double",
       "facetable": false,
       "filterable": true,
-      "key": false,
       "retrievable": true,
-      "searchable": false,
       "sortable": true,
-      "analyzer": null,
-      "indexAnalyzer": null,
-      "searchAnalyzer": null,
-      "synonymMaps": [],
-      "fields": []
-    },
-    {
-      "name": "video_indexer_url",
-      "type": "Edm.String",
-      "facetable": false,
-      "filterable": true,
-      "key": false,
-      "retrievable": true,
-      "searchable": false,
-      "sortable": false,
       "analyzer": null,
       "indexAnalyzer": null,
       "searchAnalyzer": null,
@@ -63,7 +47,7 @@
     {
       "name": "language",
       "type": "Edm.String",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "key": false,
       "retrievable": true,
@@ -134,7 +118,7 @@
     {
       "name": "keywords",
       "type": "Collection(Edm.String)",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "retrievable": true,
       "searchable": true,
@@ -160,7 +144,7 @@
     {
       "name": "faces",
       "type": "Collection(Edm.String)",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "retrievable": true,
       "searchable": true,
@@ -186,36 +170,10 @@
     {
       "name": "brands",
       "type": "Collection(Edm.String)",
-      "facetable": false,
+      "facetable": true,
       "filterable": true,
       "retrievable": true,
       "searchable": true,
-      "analyzer": null,
-      "indexAnalyzer": null,
-      "searchAnalyzer": null,
-      "synonymMaps": [],
-      "fields": []
-    },
-    {
-      "name": "namedLocations",
-      "type": "Collection(Edm.String)",
-      "facetable": false,
-      "filterable": true,
-      "retrievable": true,
-      "searchable": true,
-      "analyzer": null,
-      "indexAnalyzer": null,
-      "searchAnalyzer": null,
-      "synonymMaps": [],
-      "fields": []
-    },
-    {
-      "name": "namedPeople",
-      "type": "Collection(Edm.String)",
-      "facetable": false,
-      "filterable": true,
-      "retrievable": true,
-      "searchable": false,
       "analyzer": null,
       "indexAnalyzer": null,
       "searchAnalyzer": null,
@@ -243,5 +201,12 @@
   "analyzers": [],
   "charFilters": [],
   "tokenFilters": [],
-  "tokenizers": []
+  "tokenizers": [],
+  "similarity": {
+    "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
+    "k1": null,
+    "b": null
+  },
+  "encryptionKey": null,
+  "semantic": null,
 }
