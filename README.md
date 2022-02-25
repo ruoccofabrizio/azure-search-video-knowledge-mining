@@ -41,7 +41,7 @@ To deploy a video indexer enabled Knowledge Mining Solution Accelerator Web App,
 If you want to personalize the UI, please refer to this [Knowledge Mining Solution Accelerator with Video Indexer](https://github.com/ruoccofabrizio/azure-search-knowledge-mining)
 
 # How to create a .env file
-Modify the [.env file](./.env) with you application settings:
+Modify the [.env file](./.env) with your application settings:
 
 ### Required fields
 
@@ -77,7 +77,7 @@ AVAM_Account_Location=
 
 ### Optional Fields
 
-While some fields are optional, we recommend not removing them from *appsettings.json* to avoid any possible errors.
+While some fields are optional, we recommend not removing them from *.env* to avoid any possible errors.
 
 ```shell
 InstrumentationKey=
