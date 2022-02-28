@@ -4,19 +4,20 @@ import os
 import requests
 import urllib.parse
 from datetime import datetime, timedelta
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, generate_container_sas
+from azure.storage.blob import generate_container_sas
 
 # Function triggered by Blob Storage Input
-def main(myblob: func.InputStream):
-    logging.info(f"Python blob trigger function processed blob {myblob.name}")
-    if ".mp4" in myblob.name:
-        logging.info(f"Start processing {myblob.name}")
-        # Generate Shared Access Signature to access the video on Azure Blob Storage
-        sas_url = get_sas_url(myblob.uri)
-        logging.info(sas_url)
-        # Call Video Indexer service with Shared Access Signature to index the video
-        video_result = start_video_indexing(myblob.name ,sas_url)
-        logging.info(video_result)
+def main(event: func.EventGridEvent):
+    # Generate Shared Access Signature to access the video on Azure Blob Storage
+    event_data = event.get_json()
+    url = event_data['url']
+    logging.info(f"Python blob trigger function processed blob: {url}")
+    name = url.split('/')[-1]
+    sas_url = get_sas_url(url)
+    logging.info(sas_url)
+    # Call Video Indexer service with Shared Access Signature to index the video
+    video_result = start_video_indexing(name ,sas_url)
+    logging.info(video_result)
 
 # Define function to create Shared Access Signature
 def get_sas_url(uri: str):
@@ -58,7 +59,7 @@ def start_video_indexing(video_name: str, video_url: str):
     function_url = urllib.parse.quote(function_url)
     privacy = "Private" # Set visibility for the video [Private, Public]
 
-    upload_video_url = f"{endpoint}/{location}/Accounts/{account_id}/Videos?accessToken={access_token}&name={video_name}&videoUrl={video_url}&privacy={privacy}&callbackUrl={function_url}"
+    upload_video_url = f"{endpoint}/{location}/Accounts/{account_id}/Videos?accessToken={access_token}&name={video_name}&videoUrl={video_url}&privacy={privacy}&callbackUrl={function_url}&language=auto"
     logging.info(upload_video_url)
     upload_result = requests.post(upload_video_url, headers=headers)
 
