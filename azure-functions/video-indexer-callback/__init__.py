@@ -5,6 +5,7 @@ import json
 import os
 import base64
 import datetime
+from azure.identity import ManagedIdentityCredential, AzureCliCredential, ChainedTokenCredential
 
 # Function triggered by Blob Storage Input
 def main(req: func.HttpRequest) -> str: #func.HttpResponse:
@@ -42,18 +43,23 @@ def get_video_insights(video_id: str):
     endpoint    = os.environ["video_indexer_endpoint"]
     account_id  = os.environ["video_indexer_account_id"]
     location    = os.environ["video_indexer_location"]
-    api_key     = os.environ["video_indexer_api_key"]
+    resource_id     = os.environ["video_indexer_resource_id"]
 
+    # Get access token to AVAM using ManagedIdentity from Azure Function or AzureCLI when executing locally
+    credential = ChainedTokenCredential(ManagedIdentityCredential(), AzureCliCredential())
+    access_token = credential.get_token("https://management.azure.com")
+    url = f"https://management.azure.com{resource_id}/generateAccessToken?api-version=2021-10-18-preview"
     headers = {
-    'Ocp-Apim-Subscription-Key' : api_key
+        "Authorization" : f"Bearer {access_token.token}"
     }
+    body = {
+    "permissionType": "Contributor",
+    "scope": "Account"
+    }
+    response = requests.post(url, headers=headers, json=body)
 
-    # Create token url # NEEDED ONLY FOR PRIVATE VIDEOs
-    video_token_url = endpoint + "/auth/" + location + "/Accounts/" + account_id +"/Videos/" + video_id +"/AccessToken?allowEdit=true"
-    video_token_url = f"{endpoint}/auth/{location}/Accounts/{account_id}/Videos/{video_id}/AccessToken?allowEdit=true"
+    video_access_token = response.json()['accessToken']
 
-    # Get Video level access token # ONLY FOR PRIVATE VIDEOs
-    video_access_token = requests.get(video_token_url, headers=headers).json()
 
     # Create video URL
     video_url = f"{endpoint}/{location}/Accounts/{account_id}/Videos/{video_id}/Index?reTranslate=False&includeStreamingUrls=True&accessToken={video_access_token}"
@@ -74,12 +80,8 @@ def process_video_data(video_data: dict):
     video_index['metadata_storage_name'] = video_data['name']
     video_index['durationInSeconds'] = video_data['durationInSeconds']
 
-    # Create link to watch the video
-    account_id = video_data['accountId']
     video_id = video_data['id']
 
-    location_url_prefix = os.environ["video_indexer_location_url_prefix"]
-    video_index['video_indexer_url'] = f"https://api.videoindexer.ai/{location_url_prefix}/Accounts/{account_id}/Videos/{video_id}/PlayerWidget?accessToken={token}"
     
     # Create path on Azure Blob Storage for video insights file
     keys            = get_storage_details(os.environ['videoknowledgemining_STORAGE'])

@@ -5,6 +5,7 @@ import requests
 import urllib.parse
 from datetime import datetime, timedelta
 from azure.storage.blob import generate_container_sas
+from azure.identity import ManagedIdentityCredential, AzureCliCredential, ChainedTokenCredential
 
 # Function triggered by Blob Storage Input
 def main(event: func.EventGridEvent):
@@ -37,20 +38,29 @@ def start_video_indexing(video_name: str, video_url: str):
     endpoint        = os.environ["video_indexer_endpoint"]
     account_id      = os.environ["video_indexer_account_id"]
     location        = os.environ["video_indexer_location"]
-    api_key         = os.environ["video_indexer_api_key"]
+    resource_id     = os.environ["video_indexer_resource_id"]
+
     # Get Azure Function URL to set as callback from video indexer
     function_url    = os.environ["function_url"]
     
+    # Get access token to AVAM using ManagedIdentity from Azure Function or AzureCLI when executing locally
+    credential = ChainedTokenCredential(ManagedIdentityCredential(), AzureCliCredential())
+    access_token = credential.get_token("https://management.azure.com")
+    url = f"https://management.azure.com{resource_id}/generateAccessToken?api-version=2021-10-18-preview"
     headers = {
-    'Ocp-Apim-Subscription-Key' : api_key
+        "Authorization" : f"Bearer {access_token.token}"
     }
+    body = {
+    "permissionType": "Contributor",
+    "scope": "Account"
+    }
+    response = requests.post(url, headers=headers, json=body)
 
-    # url = "https://api.videoindexer.ai/Auth/" + location + "/Accounts?generateAccessTokens&allowEdit"
-    # response = requests.get(url, headers=headers)
+
+
 
     # Retrieve access token to perform operation on Video Indexer
-    response = requests.get(endpoint + "/auth/" + location + "/Accounts/" + account_id + "/AccessToken?allowEdit=true", headers=headers)
-    access_token = response.json()
+    access_token = response.json()['accessToken']
 
     # Call Video Indexer to start processing the video
     video_url = urllib.parse.quote(video_url)
@@ -61,6 +71,6 @@ def start_video_indexing(video_name: str, video_url: str):
 
     upload_video_url = f"{endpoint}/{location}/Accounts/{account_id}/Videos?accessToken={access_token}&name={video_name}&videoUrl={video_url}&privacy={privacy}&callbackUrl={function_url}&language=auto"
     logging.info(upload_video_url)
-    upload_result = requests.post(upload_video_url, headers=headers)
+    upload_result = requests.post(upload_video_url)
 
     return upload_result.json()
