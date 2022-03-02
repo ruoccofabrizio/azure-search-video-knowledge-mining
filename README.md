@@ -37,6 +37,9 @@ To deploy the full solution and the Web Application, select the following button
 
 The Azure portal displays a pane that allows you to easily provide parameter values. The parameters are pre-filled with the default values from the template.
 
+Once the deployment is completed, start processing your videos dropping them in the "video-knowledge-mining-drop" container in the "storage account" in your "Resource Group". 
+To navigate the Web Ui, check the "App Service" resource in your "Resource Group".
+
 # Available insights in Azure Video Analytics for Media
 
 ## Video insights
