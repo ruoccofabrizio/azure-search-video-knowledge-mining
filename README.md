@@ -76,8 +76,9 @@ When indexing by one channel, partial result for those models will be available.
 # OPTIONAL - Web App
 NOTE: Web App deployment is automated by the [One click Azure Deployment](#one-click-azure-deployment). Use the following instructions if you want to deploy just the UI and not the full solution.
 
-<br>
-To deploy a video indexer enabled Knowledge Mining Solution Accelerator Web App, you can pull and run a pre-built docker image providing a [.env configuration file](#how-to-create-a-env-file):
+To deploy a video indexer enabled Knowledge Mining Solution Accelerator Web App, you can pull and run a pre-built docker image providing a
+[.env configuration file](#how-to-create-a-env-file) :
+
 ```docker
     docker run -d --env-file .env -p 80:80 videokm.azurecr.io/ui:latest
 ``` 
