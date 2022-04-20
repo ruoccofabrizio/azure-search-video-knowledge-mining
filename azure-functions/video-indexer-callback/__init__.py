@@ -65,7 +65,7 @@ def get_video_insights(video_id: str):
     video_url = f"{endpoint}/{location}/Accounts/{account_id}/Videos/{video_id}/Index?reTranslate=False&includeStreamingUrls=True&accessToken={video_access_token}"
 
     # Get Video Data
-    search_video = requests.get(video_url, headers=headers)
+    search_video = requests.get(video_url)#, headers=headers)
     video_data = search_video.json()
 
     return video_data
