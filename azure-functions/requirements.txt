@@ -1,4 +1,4 @@
 azure-functions
-requests==2.22.0
+requests==2.31.0
 azure-storage-blob==12.3.0
 azure-identity==1.7.1
